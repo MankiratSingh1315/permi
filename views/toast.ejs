@@ -1,0 +1,41 @@
+<script>
+  const toastTemplate='<div style="opacity:0" class="flex bg-TYPE_COLOR-100 duration-200 justify-between m-8 me-4 p-4 rounded-lg transition sm:w-96 w-auto"><div class="flex items-center justify-center">TYPE_ICON</div><div class="ml-4 mr-2 w-full"><h1 class="font-semibold text-xl">TOAST_TITLE</h1><p>TOAST_DESCRIPTION</p></div><div class="flex items-center justify-center cursor-pointer"><svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(5 5)" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 10.5-10-10z"/><path d="m10.5.5-10 10"/></g></svg></div></div>',toastStyles={info:{color:"sky",icon:'<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" transform="translate(2 2)"><g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="8.5" r="8"/><path d="m8.5 12.5v-4h-1"/><path d="m7.5 12.5h2"/></g><circle cx="8.5" cy="5.5" r="1" fill="currentColor"/></g></svg>'},warn:{color:"orange",icon:'<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle cx="10.5" cy="10.5" r="8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="m10.5 11.5v-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10.5" cy="14.5" r="1" fill="currentColor"/></g></svg>'},error:{color:"rose",icon:'<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle cx="10.5" cy="10.5" r="8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="m10.5 11.5v-5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10.5" cy="14.5" r="1" fill="currentColor"/></g></svg>'},success:{color:"emerald",icon:'<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(2 2)"><circle cx="8.5" cy="8.5" r="8"/><path d="m5.5 9.5 2 2 5-5"/></g></svg>'}};function toastInit(){var e=document.querySelector("body"),r=document.createElement("div");r.id="alertBox",r.classList="fixed bottom-0 right-0 z-[9999]",e.append(r)}function toast(e,r,o,t=7.5){var l=document.getElementById("alertBox"),n=document.createElement("div");let i=toastTemplate.replace("TYPE_COLOR",o.color);i=i.replace("TYPE_ICON",o.icon),n.innerHTML=i.replace("TOAST_TITLE",e),n.innerHTML=n.innerHTML.replace("TOAST_DESCRIPTION",r),n.querySelectorAll("div")[3].onclick=()=>{n.querySelectorAll("div")[0].style.opacity=0,setTimeout((()=>{n.remove()}),250)},setTimeout((()=>{n.querySelectorAll("div")[0].style.opacity=0,setTimeout((()=>{n.remove()}),250)}),1e3*t),l.append(n),setTimeout((()=>{n.querySelectorAll("div")[0].style.opacity=1}),200)}
+</script>
+
+<script>
+/* Get the documentElement (<html>) to display the page in fullscreen */
+var elem = document.documentElement;
+
+var fullScreen = false;
+
+function toggleFullScr(){
+  if(fullScreen){
+    closeFullscreen();
+  }else{
+    openFullscreen();
+  }
+
+  fullScreen = !fullScreen;
+}
+/* View in fullscreen */
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+</script>

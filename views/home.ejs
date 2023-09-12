@@ -1,0 +1,56 @@
+  <%- include('head'); %>
+
+    <center>
+      
+    <br>
+      <img src="https://mlsctiet.com/static/media/mlsc-logo.13f9160c49942ec13624.png" style="height:10rem" alt="MLSCLOGO">
+      <br>
+    <div id="qr_code" class="m-auto"></div>
+    <br><br>
+
+    <span id="a_code" class="bg-white font-semibold text-black text-center rounded-lg px-8 py-2 mb-4 flex items-center justify-center w-60"> </span>
+
+          <button onclick="toggleFullScr()" class="bg-white font-semibold text-black text-center rounded-lg px-8 py-2 mb-4 flex items-center justify-center w-60">FullScreen</button>
+</center>
+
+<script src="https://cdn.jsdelivr.net/npm/qr-creator/dist/qr-creator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<%- include('toast'); %>
+  
+<script>
+  var socket = io({transports: ['websocket'], upgrade: false});
+      toastInit();
+
+    socket.on("replyFromSocket", (msg) => {
+      toast('Message', msg.message, toastStyles.info);
+    });
+
+      socket.on("entry", (data) => {
+
+        var { code ,count ,phone} = data;
+
+        if(phone){
+                 toast('Success',phone + " Entry Done", toastStyles.success);
+        }
+          var url = `https://api.whatsapp.com/send/?phone=917973632918&text=${code}&type=phone_number&app_absent=0`;
+          document.getElementById("a_code").innerText = `Count : ${count}`;
+        
+          document.getElementById("qr_code").innerHTML = '';
+        
+          QrCreator.render({
+            text: url,
+            radius: 0.5, // 0.0 to 0.5
+            ecLevel: 'H', // L, M, Q, H
+            fill: '#00a1f1', // foreground color
+            background: null, // color or null for transparent
+            size: 356 // in pixels
+          }, document.querySelector('#qr_code'));
+          
+      });
+
+    // socket.emit('sendSomething', data);
+</script>
+    
+
+    
+  <%- include('foot'); %>
